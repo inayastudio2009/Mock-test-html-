@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MOCK TEST</title>
+<style>
+:root{--ink:#10243e;--muted:#58708c;--bg:#eaf3f1;--card:#fff;--brand:#0b5d6b;--brand2:#127f86;--gold:#f2b134;--ok:#15803d;--okbg:#e6f6ec;--bad:#c62828;--badbg:#fdeceb;--line:#d5e3e0}
+*{box-sizing:border-box;margin:0;min-width:0}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;background:var(--bg);color:var(--ink);min-height:100vh;min-height:100dvh;overflow-x:hidden;line-height:1.45}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.sans,button,.timer,.meta{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+header{background:var(--brand);color:#fff;padding:calc(12px + env(safe-area-inset-top)) 16px 12px;position:sticky;top:0;z-index:5;box-shadow:0 3px 14px rgba(11,93,107,.3)}
+.hin{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
+h1{font-size:1.25rem;letter-spacing:.08em;font-weight:700}
+.timer{background:rgba(255,255,255,.16);padding:6px 14px;border-radius:999px;font-weight:700;font-size:.95rem;font-variant-numeric:tabular-nums}
+.wrap{max-width:760px;margin:0 auto;padding:14px 14px calc(104px + env(safe-area-inset-bottom))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 16px;margin-bottom:14px}
+.meta{color:var(--muted);font-size:.9rem}
+.start h2{font-size:1.6rem;line-height:1.2;margin:4px 0 6px}
+.facts{list-style:none;padding:0;margin:16px 0 20px;display:grid;gap:8px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:.98rem}
+.facts li{padding:10px 12px;border-left:4px solid var(--brand2);background:#f3f9f8;border-radius:0 8px 8px 0}
+.btn{border:0;border-radius:12px;padding:14px 20px;font-weight:700;font-size:1rem;min-height:52px;transition:transform .12s,background .2s}
+.btn:active{transform:scale(.97)}
+.primary{background:var(--brand);color:#fff}.primary:hover{background:var(--brand2)}
+.ghost{background:#fff;color:var(--brand);border:2px solid var(--brand)}
+.full{width:100%}
+.prow{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;font-size:.9rem}
+.badge{padding:4px 12px;border-radius:999px;font-weight:700;font-size:.82rem;font-family:system-ui,sans-serif}
+.Easy{background:#dff3e5;color:#166534}.Medium{background:#fdf0cf;color:#8a5a00}.Tough{background:#fbe0dd;color:#9b1c1c}
+.bar{height:10px;background:#cfe0dd;border-radius:99px;overflow:hidden;margin-bottom:14px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brand2),var(--gold));border-radius:99px;transition:width .4s ease}
+.qcard{animation:fade .3s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.qn-label{color:var(--muted);font-size:.9rem;margin-bottom:6px}
+.qtext{font-size:1.2rem;line-height:1.4;font-weight:700;margin-bottom:16px;overflow-wrap:anywhere}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:12px;padding:12px;min-height:58px;font-size:1.02rem;line-height:1.3;transition:border-color .15s,background .15s,transform .1s}
+.opt:not(.lock):hover{border-color:var(--brand2);background:#f3f9f8}
+.opt:not(.lock):active{transform:scale(.985)}
+.opt .l{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#e4efed;font-weight:700;font-family:system-ui,sans-serif;font-size:.95rem}
+.opt .t{flex:1;overflow-wrap:anywhere}
+.opt .m{flex:none;font-size:1.3rem;font-weight:800;font-family:system-ui,sans-serif}
+.lock{cursor:default}
+.opt.correct{border-color:var(--ok);background:var(--okbg)}.opt.correct .l{background:var(--ok);color:#fff}.opt.correct .m{color:var(--ok)}
+.opt.wrong{border-color:var(--bad);background:var(--badbg)}.opt.wrong .l{background:var(--bad);color:#fff}.opt.wrong .m{color:var(--bad)}
+.fb{margin-top:14px;padding:12px 14px;border-radius:10px;font-weight:700;font-size:.95rem;font-family:system-ui,sans-serif;animation:fade .25s}
+.fb.ok{background:var(--okbg);color:var(--ok)}.fb.no{background:var(--badbg);color:var(--bad)}
+.nav h3{font-size:1rem;margin-bottom:10px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px}
+.qb{aspect-ratio:1;min-height:44px;border-radius:10px;border:2px solid var(--line);background:#fff;font-weight:700;font-size:1rem}
+.qb.done{background:var(--brand2);border-color:var(--brand2);color:#fff}
+.qb.cur{outline:3px solid var(--gold);outline-offset:1px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.85rem;color:var(--muted);margin-bottom:14px;font-family:system-ui,sans-serif}
+.legend span:before{content:"";display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:#fff;border:2px solid var(--line)}
+.legend .a:before{background:var(--brand2);border-color:var(--brand2)}
+.bottom{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));z-index:6}
+.bin{max-width:760px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.ring{width:150px;height:150px;border-radius:50%;margin:6px auto 14px;display:grid;place-items:center;background:conic-gradient(var(--gold) calc(var(--p)*1%),#d6e5e2 0)}
+.ring div{width:120px;height:120px;border-radius:50%;background:#fff;display:grid;place-items:center;text-align:center;font-size:1.9rem;font-weight:700;color:var(--brand)}
+.res h2{text-align:center;font-size:1.5rem}
+.msg{text-align:center;color:var(--muted);margin:4px 0 14px;font-size:1rem}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.stat{background:#f3f9f8;border:1px solid var(--line);border-radius:12px;padding:12px}
+.stat b{display:block;font-size:1.45rem;color:var(--brand);overflow-wrap:anywhere}
+.stat span{font-size:.85rem;color:var(--muted);font-family:system-ui,sans-serif}
+.stat.g b{color:var(--ok)}.stat.r b{color:var(--bad)}
+.stat:last-child{grid-column:1/-1}
+.ov{position:fixed;inset:0;background:rgba(16,36,62,.55);display:grid;place-items:center;padding:20px;z-index:20}
+.dlg{background:#fff;border-radius:16px;padding:22px 18px;max-width:380px;width:100%;animation:fade .2s}
+.dlg p{margin:8px 0 18px}
+.dlg .bin{max-width:none}
+@media(min-width:640px){.wrap{padding-top:24px}.qtext{font-size:1.4rem}.card{padding:24px}.stats{grid-template-columns:repeat(3,1fr)}.stat:last-child{grid-column:auto}.grid{gap:10px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="hin"><h1>MOCK TEST</h1><div class="timer" id="timer" hidden>00:00</div></div></header>
+<main class="wrap">
+
+<section id="start" class="card start">
+  <p class="meta">Class 11 &middot; Biology</p>
+  <h2>The Living World</h2>
+  <ul class="facts">
+    <li>15 questions, 1 mark each (15 marks in total)</li>
+    <li>No negative marking</li>
+    <li>Questions 1&ndash;5 easy, 6&ndash;10 medium, 11&ndash;15 tough</li>
+    <li>Each answer locks as soon as you select it</li>
+    <li>The timer starts when you tap Start Test</li>
+  </ul>
+  <button class="btn primary full" id="startBtn">Start Test</button>
+</section>
+
+<section id="quiz" hidden>
+  <div class="prow"><span class="meta" id="answeredTxt"></span><span class="badge" id="diff"></span></div>
+  <div class="bar"><i id="barFill"></i></div>
+  <div class="card qcard" id="qcard">
+    <div class="qn-label" id="qlabel"></div>
+    <div class="qtext" id="qtext"></div>
+    <div class="opts" id="opts"></div>
+    <div id="fb"></div>
+  </div>
+  <div class="card nav">
+    <h3>Question navigator</h3>
+    <div class="grid" id="grid"></div>
+    <div class="legend"><span class="a">Answered</span><span>Unanswered</span></div>
+    <button class="btn ghost full" id="submitBtn">Submit Test</button>
+  </div>
+  <div class="bottom"><div class="bin">
+    <button class="btn ghost" id="prev">&larr; Previous</button>
+    <button class="btn primary" id="next">Next &rarr;</button>
+  </div></div>
+</section>
+
+<section id="result" class="card res" hidden>
+  <h2>Test Result</h2>
+  <p class="msg" id="rmsg"></p>
+  <div class="ring" id="ring"><div id="ringTxt"></div></div>
+  <div class="stats" id="stats"></div>
+  <button class="btn primary full" id="restart">Restart Test</button>
+</section>
+
+</main>
+<div class="ov" id="ov" hidden><div class="dlg" role="dialog" aria-modal="true">
+  <h3>Submit test?</h3><p id="ovTxt"></p>
+  <div class="bin"><button class="btn ghost" id="ovNo">Go back</button><button class="btn primary" id="ovYes">Submit</button></div>
+</div></div>
+
+<script>
+(function(){
+"use strict";
+var Q=[
+{d:"Easy",q:"What is the basic unit of classification?",o:["Genus","Species","Family","Order"],a:1},
+{d:"Easy",q:"Who is known as the Father of Taxonomy?",o:["Charles Darwin","Aristotle","Carolus Linnaeus","Robert Hooke"],a:2},
+{d:"Easy",q:"Which of the following is a defining feature of living organisms?",o:["Growth","Reproduction","Metabolism","All of these"],a:3},
+{d:"Easy",q:"The scientific name of humans is:",o:["Homo Sapiens","Homo sapiens","homo Sapiens","Homo sapiens sapiens"],a:1},
+{d:"Easy",q:"Which of the following is NOT a characteristic of living organisms?",o:["Metabolism","Consciousness","Cellular organisation","Absence of growth"],a:3},
+{d:"Medium",q:"The process of assigning scientific names to organisms is called:",o:["Classification","Nomenclature","Identification","Taxonomy"],a:1},
+{d:"Medium",q:"Which taxonomic category comes immediately above Genus?",o:["Species","Family","Order","Class"],a:1},
+{d:"Medium",q:"In binomial nomenclature, the first word represents:",o:["Species","Family","Genus","Order"],a:2},
+{d:"Medium",q:"Which taxonomic aid contains dried and pressed plant specimens?",o:["Museum","Herbarium","Botanical Garden","Zoological Park"],a:1},
+{d:"Medium",q:"The correct sequence of taxonomic categories from lower to higher is:",o:["Species \u2192 Genus \u2192 Family \u2192 Order","Genus \u2192 Species \u2192 Family \u2192 Class","Family \u2192 Genus \u2192 Species \u2192 Order","Species \u2192 Family \u2192 Genus \u2192 Class"],a:0},
+{d:"Tough",q:"Which of the following represents the correct scientific writing of Mango?",o:["mangifera Indica","Mangifera Indica","Mangifera indica","MANGIFERA INDICA"],a:2},
+{d:"Tough",q:"A group of related families forms a:",o:["Class","Order","Genus","Species"],a:1},
+{d:"Tough",q:"Which taxonomic aid is used for the identification of organisms based on contrasting characters?",o:["Herbarium","Key","Museum","Botanical Garden"],a:1},
+{d:"Tough",q:"Which statement about metabolism is correct?",o:["It occurs only in plants.","It occurs only in animals.","It includes all chemical reactions occurring inside living organisms.","It is not related to living organisms."],a:2},
+{d:"Tough",q:"Why is reproduction not considered an all-inclusive defining property of living organisms?",o:["All organisms reproduce continuously.","Some living organisms do not reproduce.","Reproduction occurs only in plants.","Reproduction is not a biological process."],a:1}
+];
+var N=Q.length,L=["A","B","C","D"];
+var cur=0,ans=[],t0=0,t1=0,timerId=null;
+function $(id){return document.getElementById(id)}
+function show(id){["start","quiz","result"].forEach(function(s){$(s).hidden=(s!==id)});$("timer").hidden=(id!=="quiz");window.scrollTo(0,0)}
+function secs(){return Math.max(0,Math.floor(((t1||Date.now())-t0)/1000))}
+function pad(n){return n<10?"0"+n:""+n}
+function clock(s){return pad(Math.floor(s/60))+":"+pad(s%60)}
+function tick(){$("timer").textContent=clock(secs())}
+function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e}
+function answeredCount(){return ans.filter(function(a){return a!==null}).length}
+
+function begin(){
+  ans=[];for(var i=0;i<N;i++)ans.push(null);
+  cur=0;t1=0;t0=Date.now();
+  clearInterval(timerId);tick();timerId=setInterval(tick,250);
+  show("quiz");render();
+}
+function render(){
+  var q=Q[cur],a=ans[cur],locked=(a!==null);
+  $("qlabel").textContent="Question "+(cur+1)+" of "+N;
+  $("qtext").textContent=q.q;
+  var d=$("diff");d.textContent=q.d;d.className="badge "+q.d;
+  $("barFill").style.width=((cur+1)/N*100)+"%";
+  $("answeredTxt").textContent="Answered "+answeredCount()+" of "+N;
+  var box=$("opts");box.innerHTML="";
+  q.o.forEach(function(txt,i){
+    var b=el("button","opt"+(locked?" lock":""));b.type="button";
+    b.appendChild(el("span","l",L[i]));b.appendChild(el("span","t",txt));
+    var m=el("span","m","");
+    if(locked){
+      if(i===q.a){b.classList.add("correct");m.textContent="\u2713"}
+      else if(i===a){b.classList.add("wrong");m.textContent="\u2717"}
+    }
+    b.appendChild(m);b.setAttribute("aria-disabled",locked?"true":"false");
+    b.addEventListener("click",function(){pick(i)});
+    box.appendChild(b);
+  });
+  var fb=$("fb");fb.innerHTML="";
+  if(locked){
+    if(a===q.a){fb.appendChild(el("div","fb ok","Correct! +1 mark"))}
+    else{fb.appendChild(el("div","fb no","Incorrect. Correct answer: "+L[q.a]+". "+q.o[q.a]))}
+  }
+  var qc=$("qcard");qc.classList.remove("qcard");void qc.offsetWidth;qc.classList.add("qcard");
+  $("prev").disabled=(cur===0);
+  $("next").textContent=(cur===N-1)?"Finish":"Next \u2192";
+  drawGrid();
+}
+function drawGrid(){
+  var g=$("grid");g.innerHTML="";
+  for(var i=0;i<N;i++){(function(i){
+    var b=el("button","qb"+(ans[i]!==null?" done":"")+(i===cur?" cur":""),String(i+1));
+    b.type="button";b.setAttribute("aria-label","Question "+(i+1)+(ans[i]!==null?", answered":", unanswered"));
+    b.addEventListener("click",function(){go(i)});g.appendChild(b);
+  })(i)}
+}
+function pick(i){
+  if(ans[cur]!==null)return;
+  ans[cur]=i;render();
+}
+function go(n){if(n<0||n>=N)return;cur=n;render()}
+function askSubmit(){
+  var un=N-answeredCount();
+  $("ovTxt").textContent=un>0?"You have "+un+" unanswered question"+(un>1?"s":"")+". Unanswered questions score 0. Do you want to submit now?":"You have answered all "+N+" questions. Submit your test now?";
+  $("ov").hidden=false;$("ovYes").focus();
+}
+function submit(){
+  $("ov").hidden=true;
+  t1=Date.now();clearInterval(timerId);timerId=null;
+  var att=answeredCount(),cor=0,i;
+  for(i=0;i<N;i++){if(ans[i]!==null&&ans[i]===Q[i].a)cor++}
+  var inc=att-cor,un=N-att,pct=Math.round(cor/N*10000)/100;
+  var s=secs(),tt=s>=60?Math.floor(s/60)+" min "+pad(s%60)+" sec":s+" sec";
+  $("ring").style.setProperty("--p",pct);
+  $("ringTxt").textContent=pct+"%";
+  $("rmsg").textContent=pct>=80?"Excellent work!":pct>=60?"Good job. Keep it up!":pct>=40?"Fair attempt. Revise and try again.":"Revise the chapter and try again.";
+  var rows=[["Total Questions",N,""],["Total Marks",N,""],["Attempted Questions",att,""],["Correct Answers",cor,"g"],["Incorrect Answers",inc,"r"],["Unattempted Questions",un,""],["Final Score",cor+" / "+N,""],["Percentage",pct+"%",""],["Total Time Taken",tt,""]];
+  var st=$("stats");st.innerHTML="";
+  rows.forEach(function(r){var d=el("div","stat "+r[2]);d.appendChild(el("b","",String(r[1])));d.appendChild(el("span","",r[0]));st.appendChild(d)});
+  show("result");
+}
+$("startBtn").addEventListener("click",begin);
+$("prev").addEventListener("click",function(){go(cur-1)});
+$("next").addEventListener("click",function(){if(cur===N-1)askSubmit();else go(cur+1)});
+$("submitBtn").addEventListener("click",askSubmit);
+$("ovNo").addEventListener("click",function(){$("ov").hidden=true});
+$("ovYes").addEventListener("click",submit);
+$("restart").addEventListener("click",begin);
+document.addEventListener("keydown",function(e){if(e.key==="Escape")$("ov").hidden=true});
+})();
+</script>
+</body>
+</html>
